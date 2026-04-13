@@ -1,0 +1,528 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  background: #fff0f5;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e91e8c;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: #e91e8c; }
+
+.cart-icon {
+  cursor: pointer;
+  font-size: 1.2rem;
+  background: #e91e8c;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: background 0.2s;
+}
+
+.cart-icon:hover { background: #c2185b; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #e91e8c, #f48fb1);
+  color: #fff;
+  text-align: center;
+  padding: 100px 20px;
+}
+
+.hero h1 { font-size: 2.8rem; margin-bottom: 12px; }
+.hero p { font-size: 1.2rem; margin-bottom: 28px; opacity: 0.9; }
+
+.btn-hero {
+  background: #fff;
+  color: #e91e8c;
+  padding: 14px 36px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+
+.btn-hero:hover { transform: scale(1.05); }
+
+/* PRODUK */
+.produk-section {
+  padding: 60px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.produk-section h2 {
+  font-size: 2rem;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filter-bar input,
+.filter-bar select {
+  padding: 10px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  min-width: 200px;
+}
+
+.filter-bar input:focus,
+.filter-bar select:focus {
+  border-color: #e91e8c;
+}
+
+.loading {
+  text-align: center;
+  color: #888;
+  font-size: 1rem;
+  padding: 40px;
+}
+
+.produk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.produk-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.produk-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.produk-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.produk-info {
+  padding: 16px;
+}
+
+.produk-info h3 { font-size: 1rem; margin-bottom: 6px; }
+
+.produk-kategori {
+  font-size: 0.8rem;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.produk-harga {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e91e8c;
+  margin-bottom: 12px;
+}
+
+.produk-stok {
+  font-size: 0.8rem;
+  color: #27ae60;
+  margin-bottom: 12px;
+}
+
+.produk-stok.habis { color: #e74c3c; }
+
+.btn-tambah {
+  width: 100%;
+  padding: 10px;
+  background: #e91e8c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-tambah:hover { background: #c2185b; }
+.btn-tambah:disabled { background: #ccc; cursor: not-allowed; }
+
+/* CART SIDEBAR */
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 360px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.3s ease;
+}
+
+.cart-sidebar.open { right: 0; }
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-header h3 { font-size: 1.2rem; }
+.cart-header button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #666;
+}
+
+#cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.cart-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart-item-info { flex: 1; }
+.cart-item-info h4 { font-size: 0.9rem; margin-bottom: 4px; }
+.cart-item-info p { font-size: 0.85rem; color: #e91e8c; font-weight: 600; }
+
+.cart-item-qty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart-item-qty button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.cart-footer {
+  padding: 20px;
+  border-top: 1px solid #eee;
+}
+
+.cart-footer p { margin-bottom: 12px; font-size: 1rem; }
+
+.btn-checkout {
+  width: 100%;
+  padding: 12px;
+  background: #25d366;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-checkout:hover { background: #1ebe5d; }
+
+.cart-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 150;
+}
+
+.cart-overlay.show { display: block; }
+
+/* TENTANG & KONTAK */
+.tentang-section,
+.kontak-section {
+  padding: 60px 40px;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.tentang-section h2,
+.kontak-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+  color: #e91e8c;
+}
+
+.kontak-section p { margin-bottom: 8px; font-size: 1rem; }
+
+/* FOOTER */
+footer {
+  background: #222;
+  color: #aaa;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .navbar { padding: 12px 20px; }
+  .nav-links { display: none; }
+  .hero h1 { font-size: 1.8rem; }
+  .produk-section { padding: 40px 16px; }
+  .cart-sidebar { width: 100%; right: -100%; }
+}
+
+/* MODAL CHECKOUT */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 8px 40px rgba(233,30,140,0.2);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #e91e8c, #f48fb1);
+  color: #fff;
+}
+
+.modal-header h3 { font-size: 1.1rem; }
+.modal-header button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.modal-body label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: -4px;
+}
+
+.modal-body input,
+.modal-body textarea,
+.modal-body select {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.modal-body input:focus,
+.modal-body textarea:focus,
+.modal-body select:focus {
+  border-color: #e91e8c;
+}
+
+.modal-ringkasan {
+  background: #fff0f5;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 4px;
+}
+
+.modal-ringkasan p { margin-bottom: 4px; }
+.modal-ringkasan strong { color: #e91e8c; }
+
+.modal-footer {
+  display: flex;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid #eee;
+}
+
+.btn-batal {
+  flex: 1;
+  padding: 12px;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #666;
+}
+
+.btn-konfirmasi {
+  flex: 2;
+  padding: 12px;
+  background: #e91e8c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+
+.btn-konfirmasi:hover { background: #c2185b; }
+.btn-konfirmasi:disabled { background: #ccc; cursor: not-allowed; }
+
+/* NOTIFIKASI SUKSES */
+.notif-sukses {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #e91e8c;
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  z-index: 400;
+  box-shadow: 0 4px 20px rgba(233,30,140,0.4);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* GANTI FOTO */
+.produk-img-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.produk-img-wrap img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  transition: filter 0.2s;
+}
+
+.produk-img-wrap:hover img {
+  filter: brightness(0.75);
+}
+
+.btn-ganti-foto {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  opacity: 0;
+  background: #e91e8c;
+  color: #fff;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.produk-img-wrap:hover .btn-ganti-foto {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* input file styling */
+#foto-file {
+  padding: 8px;
+  border: 1px dashed #f48fb1;
+  border-radius: 8px;
+  background: #fff0f5;
+  cursor: pointer;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Toko Baju Online</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">👗 Griya Daster</div>
+    <ul class="nav-links">
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="#tentang">Tentang</a></li>
+      <li><a href="#kontak">Kontak</a></li>
+    </ul>
+    <div class="cart-icon" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Koleksi baju Terbaru</h1>
+      <p>Temukan gaya terbaik untuk setiap momen</p> 
+      <a href="#produk" class="btn-hero">Belanja Sekarang</a>
+    </div>
+  </section>
+
+  <!-- FILTER & SEARCH -->
+  <section id="produk" class="produk-section">
+    <h2>Produk Kami</h2>
+    <div class="filter-bar">
+      <input type="text" id="search" placeholder="Cari produk..." oninput="filterProduk()" />
+      <select id="kategori" onchange="filterProduk()">
+        <option value="">Semua Kategori</option>  
+        <option value="Wanita">Wanita</option>
+      </select>
+    </div>
+    <div id="loading" class="loading">Memuat produk...</div>
+    <div id="produk-grid" class="produk-grid"></div>
+  </section>
+
+  <!-- CART SIDEBAR -->
+  <div id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-header">
+      <h3>Keranjang Belanja</h3>
+      <button onclick="toggleCart()">✕</button>
+    </div>
+    <div id="cart-items"></div>
+    <div class="cart-footer">
+      <p>Total: <strong id="cart-total">Rp 0</strong></p>
+      <button class="btn-checkout" onclick="checkout()">Checkout via WhatsApp</button>
+    </div>
+  </div>
+  <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+
+  <!-- TENTANG -->
+  <section id="tentang" class="tentang-section">
+    <h2>Tentang Kami</h2>
+    <p>FashionStore hadir untuk memberikan pilihan baju berkualitas dengan harga terjangkau. Kami menyediakan koleksi untuk pria, wanita, dan anak-anak.</p>
+  </section>
+
+  <!-- KONTAK -->
+  <section id="kontak" class="kontak-section">
+    <h2>Kontak</h2>
+    <p>📍 Jl. Raya Kebonsari tumpang <Kec class="Tumpang"> </Kec>
+    </p>
+    <p>📞 +62 823-3489-9699</p>
+    <p>📧 info@griya_daster24</p>
+  </section>
+
+  <!-- MODAL GANTI FOTO -->
+  <div id="modal-foto" class="modal-overlay" style="display:none">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>🖼️ Ganti Foto Produk</h3>
+        <button onclick="tutupModalFoto()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="foto-nama-produk" style="font-weight:600;margin-bottom:4px"></p>
+
+        <label>Preview</label>
+        <img id="foto-preview" src="" alt="preview"
+          style="width:100%;height:180px;object-fit:cover;border-radius:8px;border:2px dashed #f48fb1;margin-bottom:4px" />
+
+        <label>Upload dari komputer</label>
+        <input type="file" id="foto-file" accept="image/*" onchange="previewFile(event)" />
+
+        <label style="margin-top:8px">— atau paste URL gambar —</label>
+        <input type="text" id="foto-url" placeholder="https://..." oninput="previewUrl(this.value)" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn-batal" onclick="tutupModalFoto()">Batal</button>
+        <button class="btn-konfirmasi" onclick="simpanFoto()">Simpan Foto</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CHECKOUT -->
+  <div id="modal-checkout" class="modal-overlay" style="display:none">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>🛍️ Data Pemesanan</h3>
+        <button onclick="tutupModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <label>Nama Lengkap</label>
+        <input id="co-nama" type="text" placeholder="Masukkan nama lengkap" />
+
+        <label>No. HP / WhatsApp</label>
+        <input id="co-hp" type="tel" placeholder="08xxxxxxxxxx" />
+
+        <label>Alamat Pengiriman</label>
+        <textarea id="co-alamat" rows="3" placeholder="Jl. ... No. ..., Kota, Provinsi"></textarea>
+
+        <label>Metode Pembayaran</label>
+        <select id="co-bayar">
+          <option value="Transfer Bank">Transfer Bank (BCA / BRI / Mandiri)</option>
+          <option value="QRIS">QRIS</option>
+          <option value="COD">COD (Bayar di Tempat)</option>
+          <option value="Dana">Dana</option>
+          <option value="GoPay">GoPay</option>
+        </select>
+
+        <div class="modal-ringkasan" id="modal-ringkasan"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-batal" onclick="tutupModal()">Batal</button>
+        <button class="btn-konfirmasi" id="btn-kirim-pesanan" onclick="kirimPesanan()">Konfirmasi Pesanan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFIKASI SUKSES -->
+  <div id="notif-sukses" class="notif-sukses" style="display:none">
+    <div>✅ Pesanan berhasil! No. Order: <span></span></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 griya_daster24. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
